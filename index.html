@@ -554,6 +554,31 @@
     color: var(--text);
   }
 
+  /* ===== КЛИКАБЕЛЬНЫЕ ВОПРОСЫ ===== */
+  .topic-questions li.clickable-question {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .topic-questions li.clickable-question:hover {
+    color: var(--teal);
+    padding-left: 50px;
+  }
+
+  .topic-questions li.clickable-question::after {
+    content: '→';
+    position: absolute;
+    right: 0;
+    top: 10px;
+    color: var(--teal);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .topic-questions li.clickable-question:hover::after {
+    opacity: 1;
+  }
+
   .topic-meta {
     display: flex;
     justify-content: space-between;
@@ -592,6 +617,145 @@
     opacity: 1;
     margin-top: 20px;
     padding-top: 20px;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal-content {
+    background: linear-gradient(145deg, var(--bg-2) 0%, var(--bg-3) 100%);
+    border: 1px solid rgba(0, 229, 208, 0.3);
+    border-radius: 16px;
+    max-width: 900px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 50px;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0, 229, 208, 0.2);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+
+  .modal-overlay.active .modal-content {
+    transform: scale(1);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 40px; height: 40px;
+    background: rgba(0, 229, 208, 0.1);
+    border: 1px solid rgba(0, 229, 208, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--teal);
+    font-size: 24px;
+    transition: all 0.3s ease;
+  }
+
+  .modal-close:hover {
+    background: var(--teal);
+    color: var(--bg);
+    transform: rotate(90deg);
+  }
+
+  .modal-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 229, 208, 0.2);
+  }
+
+  .modal-question-num {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--teal);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .modal-question-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .modal-body {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .modal-body p {
+    margin-bottom: 16px;
+  }
+
+  .modal-body ul {
+    margin: 16px 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .modal-body ul li {
+    position: relative;
+    padding: 8px 0 8px 24px;
+    margin-bottom: 8px;
+  }
+
+  .modal-body ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .modal-body strong {
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* Скроллбар для модалки */
+  .modal-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .modal-content::-webkit-scrollbar-track {
+    background: var(--bg-3);
+  }
+
+  .modal-content::-webkit-scrollbar-thumb {
+    background: var(--teal-3);
+    border-radius: 4px;
+  }
+
+  .modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--teal-2);
   }
 
   /* ===== DICTIONARY ===== */
@@ -697,6 +861,8 @@
     .stat-number { font-size: 32px; }
     .footer { padding: 30px 25px; }
     .dict-grid { grid-template-columns: 1fr; }
+    .modal-content { padding: 30px 20px; }
+    .modal-question-title { font-size: 20px; }
   }
 </style>
 </head>
@@ -777,10 +943,10 @@
       </div>
       <h3 class="topic-title">Паблик рилейшнз: определения, понятия, принципы PR.</h3>
       <ul class="topic-questions">
-        <li data-num="1.">Понятие и функции PR.</li>
-        <li data-num="2.">Основные принципы PR.</li>
-        <li data-num="3.">Модели коммуникаций в контексте развития PR-технологий.</li>
-        <li data-num="4.">Особенности PR в сравнении с другими инструментами маркетинговых коммуникаций.</li>
+        <li data-num="1." class="clickable-question" data-answer="1">Понятие и функции PR.</li>
+        <li data-num="2." class="clickable-question" data-answer="2">Основные принципы PR.</li>
+        <li data-num="3." class="clickable-question" data-answer="3">Модели коммуникаций в контексте развития PR-технологий.</li>
+        <li data-num="4." class="clickable-question" data-answer="4">Особенности PR в сравнении с другими инструментами маркетинговых коммуникаций.</li>
       </ul>
       <div class="topic-meta">
         <span>Теория</span>
@@ -1035,6 +1201,128 @@
   </div>
 </footer>
 
+<!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-content">
+    <div class="modal-close" id="modalClose">×</div>
+    <div class="modal-header">
+      <div class="modal-question-num" id="modalQuestionNum"></div>
+      <h2 class="modal-question-title" id="modalQuestionTitle"></h2>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ===== СКРЫТЫЕ БЛОКИ С ОТВЕТАМИ ===== -->
+<div style="display: none;">
+  <div id="answer-1">
+    <p><strong>PR (Паблик рилейшнз, связи с общественностью)</strong> – это управленческая деятельность, направленная на установление и поддержание взаимовыгодных отношений организации с общественностью.</p>
+    
+    <p>Это управление репутацией и построение доверительных отношений с клиентами, партнерами, сотрудниками, гос-вом.</p>
+    
+    <p><strong>PR (функциональный аспект)</strong> – система методов и приемов, с помощью которых достигается желаемое «взаимопонимание и сотрудничество», определяющее поведение общественности.</p>
+    
+    <p><strong>PR (организационный аспект)</strong> – подразделение, служба, ориентированная на эффективное коммуникационное взаимодействие с общественностью (внешней и внутренней средой организации).</p>
+    
+    <p>Понятие ввел Томас Джефферсон в 1807 г. в своем обращении к конгрессу.</p>
+    
+    <p><strong>Подходы к определению:</strong></p>
+    <ul>
+      <li>Альтруистический – искусство и наука достижения гармонии, основанная на взаимопонимании и правде… (Сэм Блэк)</li>
+      <li>Компромиссный – деятельность по переводу прагматических целей организации в приемлемую для общества политику.</li>
+      <li>Прагматический – организация общественного мнения в целях наиболее эффективного функционирования организации и повышения её репутации.</li>
+    </ul>
+    
+    <p><em>*Общественность (по Дж. Дьюи, ситуативный подход)</em> – активное социальное образование, объединяющее всех, перед кем встает общая проблема, чтобы вместе искать пути ее разрешения.</p>
+    
+    <p><strong>Основные функции PR:</strong></p>
+    <ul>
+      <li>Коммуникативно-информационная – работа с общественным мнением, коммуникациями и информацией (ядро PR-деятельности).</li>
+      <li>Аналитико-прогностическая – анализ, прогнозирование тенденций, исследования общественного мнения.</li>
+      <li>Организационно-управленческая – PR как функция управления и менеджмента, сознательная организация коммуникации.</li>
+      <li>Консультационно-методическая – обеспечение руководства информацией об общественном мнении; помощь в выработке ответных мер на негативные факторы.</li>
+    </ul>
+    
+    <p><strong>Цели PR (по И. Викентьеву):</strong></p>
+    <ul>
+      <li>Позиционирование PR-объекта – создание и поддержание нужного образа.</li>
+      <li>Возвышение имиджа – повышение привлекательности и престижа.</li>
+      <li>Антиреклама (снижение имиджа) – уменьшение привлекательности объекта.</li>
+      <li>Отстройка от конкурентов – выделение на фоне других.</li>
+      <li>Контрреклама – восстановление случайно сниженного имиджа.</li>
+    </ul>
+    
+    <p>Позиционирование ввел Дж. Траут в 1969 г.</p>
+    
+    <p><strong>Цели большинства PR-акций:</strong></p>
+    <ul>
+      <li>Изменить общественное мнение по какому-либо вопросу, продукту или организации.</li>
+      <li>Сформировать общественное мнение, когда его нет.</li>
+      <li>Усилить существующее общественное мнение.</li>
+    </ul>
+    
+    <p><strong>Общественное мнение</strong> – оценочное суждение различных социальных групп по общественно значимым проблемам.</p>
+  </div>
+
+  <div id="answer-2">
+    <ul>
+      <li>Честность и объективность.</li>
+      <li>Открытость и прозрачность.</li>
+      <li>Двусторонний диалог и обратная связь.</li>
+      <li>Взаимная выгода (баланс между целями бренда и подробностями ЦА).</li>
+      <li>Социальная ответственность (польза обществу помимо коммерческого интереса).</li>
+      <li>Этичность.</li>
+    </ul>
+  </div>
+
+  <div id="answer-3">
+    <p><strong>Модели PR (по Грюнигу и Ханту):</strong></p>
+    <ul>
+      <li>Односторонняя модель – компания просто передает информацию, не ждёт ответа (пресс-релизы).</li>
+      <li>Двусторонняя асимметричная – компания слушает, но цель – убедить людей, а не меняться самой.</li>
+      <li>Двусторонняя симметричная – компания меняется под запросы людей, и люди меняют мнение о компании, взаимовыгодный диалог. – Самая этичная и современная модель.</li>
+    </ul>
+  </div>
+
+  <div id="answer-4">
+    <p><strong>Комплекс маркетинговых коммуникаций:</strong></p>
+    <ul>
+      <li>Реклама (Advertising) – платная, безличная форма коммуникации.</li>
+      <li>Связи с общественностью (PR) – формирование доверия и репутации.</li>
+      <li>Стимулирование сбыта (Sales Promotion) – всё, что стимулирует покупку здесь и сейчас: скидки, конкурсы, подарки.</li>
+      <li>Прямой маркетинг (Direct Marketing) – личное обращение к потребителю (рассылки, телемаркетинг).</li>
+    </ul>
+    <p>+ Личная продажа (Personal Selling) – прямой контакт продавца и покупателя.</p>
+    
+    <p><strong>PR:</strong> доверие через независимых посредников, бесплатность, долгосрочность, диалог, неполный контроль.<br>
+    <strong>Реклама:</strong> платное заявление компании, низкое доверие, краткосрочность, монолог, полный контроль.</p>
+    
+    <p><strong>PR:</strong> долгосрочная лояльность, работа с ценностями и установками.<br>
+    <strong>Стимулирование сбыта:</strong> краткосрочный всплеск продаж, работа с поведением через скидки и подарки.</p>
+    
+    <p><strong>PR:</strong> массовая аудитория, общественное мнение, опосредованный контакт через СМИ.<br>
+    <strong>Прямой маркетинг:</strong> конкретный клиент, персонализация, прямой контакт (рассылки, звонки).</p>
+    
+    <p><strong>PR:</strong> подготовка общественного мнения, репутационный фон для всех коммуникаций.<br>
+    <strong>Личная продажа:</strong> живой контакт «лицом к лицу», закрытие сделки с конкретным покупателем.</p>
+    
+    <p><strong>Основные направления PR-деятельности:</strong></p>
+    <ul>
+      <li>Связи с гос. учреждениями и общественными организациями (public affairs).</li>
+      <li>Управление корпоративным имиджем (corporate affairs).</li>
+      <li>Создание благоприятного образа личности (image making).</li>
+      <li>Построение отношений со СМИ (media relations).</li>
+      <li>Взаимоотношения с инвесторами (investor relations).</li>
+      <li>Взаимоотношения со спонсорами.</li>
+      <li>Отношения с потребителями.</li>
+      <li>Организация специальных событий (событийная коммуникация).</li>
+      <li>Управление кризисными ситуациями (кризисный PR).</li>
+      <li>Управление восприятием аудиторией посылаемых сообщений (message management).</li>
+      <li>Создание хороших отношений с персоналом (внутренний PR).</li>
+    </ul>
+  </div>
+</div>
+
 <script>
   // Плавное появление карточек при скролле
   const observer = new IntersectionObserver((entries) => {
@@ -1068,9 +1356,63 @@
 
   // Переключатель для карточек тем (каждая независимо)
   document.querySelectorAll('.topic-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      // Не сворачиваем, если кликнули на вопрос
+      if (e.target.classList.contains('clickable-question')) {
+        return;
+      }
       card.classList.toggle('active');
     });
+  });
+
+  // Модальное окно для ответов
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalClose = document.getElementById('modalClose');
+  const modalQuestionNum = document.getElementById('modalQuestionNum');
+  const modalQuestionTitle = document.getElementById('modalQuestionTitle');
+  const modalBody = document.getElementById('modalBody');
+
+  // Обработчик клика на вопросы
+  document.querySelectorAll('.clickable-question').forEach(question => {
+    question.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      const answerId = question.getAttribute('data-answer');
+      const questionNum = question.getAttribute('data-num');
+      const questionText = question.textContent;
+      
+      // Получаем контент ответа
+      const answerContent = document.getElementById(`answer-${answerId}`).innerHTML;
+      
+      // Заполняем модалку
+      modalQuestionNum.textContent = `Вопрос ${questionNum}`;
+      modalQuestionTitle.textContent = questionText;
+      modalBody.innerHTML = answerContent;
+      
+      // Показываем модалку
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Закрытие модалки
+  function closeModal() {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+      closeModal();
+    }
   });
 </script>
 
