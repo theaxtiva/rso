@@ -391,6 +391,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 24px;
+    align-items: start;
   }
 
   .topic-card {
@@ -402,6 +403,7 @@
     overflow: hidden;
     transition: all 0.4s ease;
     cursor: pointer;
+    min-height: 200px;
   }
 
   .topic-card::before {
@@ -418,19 +420,29 @@
     background: linear-gradient(90deg, transparent, var(--violet), transparent);
   }
 
-  .topic-card:hover {
+  .topic-card:not(.active):hover {
     transform: translateY(-6px);
     border-color: rgba(0, 229, 208, 0.3);
     box-shadow: 0 20px 50px rgba(0, 229, 208, 0.1);
   }
 
-  .topic-card.violet:hover {
+  .topic-card.violet:not(.active):hover {
     border-color: rgba(192, 132, 252, 0.3);
     box-shadow: 0 20px 50px rgba(192, 132, 252, 0.1);
   }
 
-  .topic-card:hover::before {
+  .topic-card:not(.active):hover::before {
     transform: translateX(100%);
+  }
+
+  .topic-card.active {
+    border-color: rgba(0, 229, 208, 0.4);
+    box-shadow: 0 0 30px rgba(0, 229, 208, 0.15);
+  }
+
+  .topic-card.violet.active {
+    border-color: rgba(192, 132, 252, 0.4);
+    box-shadow: 0 0 30px rgba(192, 132, 252, 0.15);
   }
 
   .topic-header {
@@ -459,13 +471,13 @@
     color: var(--violet);
   }
 
-  .topic-card:hover .topic-icon {
+  .topic-card:not(.active):hover .topic-icon {
     background: var(--teal);
     color: var(--bg);
     transform: scale(1.05);
   }
 
-  .topic-card.violet:hover .topic-icon {
+  .topic-card.violet:not(.active):hover .topic-icon {
     background: var(--violet);
     color: var(--bg);
   }
@@ -503,6 +515,10 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.4s ease;
   }
 
   .topic-questions li {
@@ -549,6 +565,10 @@
     color: var(--text-mute);
     text-transform: uppercase;
     letter-spacing: 1px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.5s ease, padding-top 0.5s ease;
   }
 
   .topic-count {
@@ -558,6 +578,20 @@
 
   .topic-card.violet .topic-count {
     color: var(--violet);
+  }
+
+  /* ===== ACTIVE STATE (ACCORDION) ===== */
+  .topic-card.active .topic-questions {
+    max-height: 2000px;
+    opacity: 1;
+    margin-bottom: 0;
+  }
+
+  .topic-card.active .topic-meta {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: 20px;
+    padding-top: 20px;
   }
 
   /* ===== DICTIONARY ===== */
@@ -720,7 +754,7 @@
 <section class="section" id="module1">
   <div class="section-header">
     <div class="section-label teal">Модуль 1</div>
-    <h2 class="section-title">PR и реклама в системе маркетинговых коммуникаций</h2>
+    <h2 class="section-title">PR и реклама в ИМК</h2>
     <p class="section-subtitle">Базовые понятия, психологические механизмы и инструменты, на которых строится вся индустрия коммуникаций.</p>
   </div>
 
@@ -1030,6 +1064,13 @@
       navbar.style.padding = '20px 60px';
       navbar.style.background = 'rgba(0, 0, 0, 0.7)';
     }
+  });
+
+  // Переключатель для карточек тем (каждая независимо)
+  document.querySelectorAll('.topic-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('active');
+    });
   });
 </script>
 
