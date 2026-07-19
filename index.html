@@ -2002,12 +2002,13 @@
 
   // Переключатель для карточек тем (каждая независимо)
   document.querySelectorAll('.topic-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      // Не сворачиваем, если кликнули на вопрос
+    card.addEventListener('click', function(e) {
+      // Если кликнули на вопрос — не разворачиваем/сворачиваем карточку
       if (e.target.classList.contains('clickable-question')) {
         return;
       }
-      card.classList.toggle('active');
+      // Переключаем только эту карточку
+      this.classList.toggle('active');
     });
   });
 
@@ -2020,12 +2021,13 @@
 
   // Обработчик клика на вопросы
   document.querySelectorAll('.clickable-question').forEach(question => {
-    question.addEventListener('click', (e) => {
+    question.addEventListener('click', function(e) {
       e.stopPropagation();
+      e.preventDefault();
       
-      const answerId = question.getAttribute('data-answer');
-      const questionNum = question.getAttribute('data-num');
-      const questionText = question.textContent;
+      const answerId = this.getAttribute('data-answer');
+      const questionNum = this.getAttribute('data-num');
+      const questionText = this.textContent;
       
       // Получаем контент ответа
       const answerContent = document.getElementById(`answer-${answerId}`).innerHTML;
@@ -2036,7 +2038,7 @@
       modalBody.innerHTML = answerContent;
       
       // Определяем цвет модалки по теме
-      const topicCard = question.closest('.topic-card');
+      const topicCard = this.closest('.topic-card');
       const modalContent = document.querySelector('.modal-content');
       if (topicCard.classList.contains('violet')) {
         modalContent.classList.add('violet');
