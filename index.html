@@ -2027,58 +2027,50 @@
     }
   });
 
-  // Аккордеон для карточек тем - ТОЛЬКО ОДНА ОТКРЫТА
+  // ===== АККОРДЕОН: только одна карточка открыта =====
   document.querySelectorAll('.topic-card').forEach(card => {
-    card.addEventListener('click', function(e) {
-      // Останавливаем всплытие события
-      e.stopPropagation();
-      
-      // Если кликнули на вопрос - не трогаем карточку
+    card.addEventListener('click', (e) => {
+      // Если кликнули на вопрос — не трогаем карточку
       if (e.target.classList.contains('clickable-question')) {
         return;
       }
       
-      const isCurrentlyActive = this.classList.contains('active');
+      const isActive = card.classList.contains('active');
       
       // Закрываем ВСЕ карточки
       document.querySelectorAll('.topic-card').forEach(c => {
         c.classList.remove('active');
       });
       
-      // Если текущая была закрыта - открываем её
-      if (!isCurrentlyActive) {
-        this.classList.add('active');
+      // Если текущая была закрыта — открываем её
+      if (!isActive) {
+        card.classList.add('active');
       }
     });
   });
- 
-  // Модальное окно для ответов
+
+  // ===== МОДАЛЬНОЕ ОКНО =====
   const modalOverlay = document.getElementById('modalOverlay');
   const modalClose = document.getElementById('modalClose');
   const modalQuestionNum = document.getElementById('modalQuestionNum');
   const modalQuestionTitle = document.getElementById('modalQuestionTitle');
   const modalBody = document.getElementById('modalBody');
 
-  // Обработчик клика на вопросы
   document.querySelectorAll('.clickable-question').forEach(question => {
-    question.addEventListener('click', function(e) {
+    question.addEventListener('click', (e) => {
       e.stopPropagation();
-      e.preventDefault();
       
-      const answerId = this.getAttribute('data-answer');
-      const questionNum = this.getAttribute('data-num');
-      const questionText = this.textContent;
-      
-      // Получаем контент ответа
+      const answerId = question.getAttribute('data-answer');
+      const questionNum = question.getAttribute('data-num');
+      const questionText = question.textContent;
       const answerContent = document.getElementById(`answer-${answerId}`).innerHTML;
       
-      // Заполняем модалку
       modalQuestionNum.textContent = `Вопрос ${questionNum}`;
       modalQuestionTitle.textContent = questionText;
       modalBody.innerHTML = answerContent;
       
-      // Определяем цвет модалки по теме
-      const topicCard = this.closest('.topic-card');
+      // Цвет модалки по теме
+      const topicCard = question.closest('.topic-card');
       const modalContent = document.querySelector('.modal-content');
       if (topicCard.classList.contains('violet')) {
         modalContent.classList.add('violet');
@@ -2086,7 +2078,6 @@
         modalContent.classList.remove('violet');
       }
       
-      // Показываем модалку
       modalOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
