@@ -754,6 +754,14 @@
   .modal-content.violet .modal-body strong {
     color: var(--violet);
   }
+
+  .modal-content.violet .modal-question-num {
+    color: var(--violet);
+  }
+
+  .modal-content.violet .modal-body ul li::before {
+    color: var(--violet);
+  }
  
   /* Скроллбар для модалки */
   .modal-content::-webkit-scrollbar {
@@ -2000,15 +2008,25 @@
     }
   });
 
-  // Переключатель для карточек тем (каждая независимо)
+  // Переключатель для карточек тем (аккордеон - только одна открыта)
   document.querySelectorAll('.topic-card').forEach(card => {
     card.addEventListener('click', function(e) {
       // Если кликнули на вопрос — не разворачиваем/сворачиваем карточку
       if (e.target.classList.contains('clickable-question')) {
         return;
       }
-      // Переключаем только эту карточку
-      this.classList.toggle('active');
+      
+      const isActive = this.classList.contains('active');
+      
+      // Закрываем все карточки
+      document.querySelectorAll('.topic-card').forEach(c => {
+        c.classList.remove('active');
+      });
+      
+      // Если текущая не была активна — открываем её
+      if (!isActive) {
+        this.classList.add('active');
+      }
     });
   });
 
