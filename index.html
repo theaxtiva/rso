@@ -567,6 +567,10 @@
     padding-left: 50px;
   }
 
+  .topic-card.violet .topic-questions li.clickable-question:hover {
+    color: var(--violet);
+  }
+
   .topic-questions li.clickable-question::after {
     content: '→';
     position: absolute;
@@ -577,8 +581,8 @@
     transition: opacity 0.3s ease;
   }
 
-  .topic-questions li.clickable-question:hover::after {
-    opacity: 1;
+  .topic-card.violet .topic-questions li.clickable-question::after {
+    color: var(--violet);
   }
 
   .topic-meta {
@@ -656,6 +660,11 @@
     transition: transform 0.3s ease;
   }
 
+  .modal-content.violet {
+    border-color: rgba(192, 132, 252, 0.3);
+    box-shadow: 0 30px 80px rgba(192, 132, 252, 0.2);
+  }
+ 
   .modal-overlay.active .modal-content {
     transform: scale(1);
   }
@@ -2021,6 +2030,15 @@
       modalQuestionNum.textContent = `Вопрос ${questionNum}`;
       modalQuestionTitle.textContent = questionText;
       modalBody.innerHTML = answerContent;
+      
+      // Определяем цвет модалки по теме
+      const topicCard = question.closest('.topic-card');
+      const modalContent = document.querySelector('.modal-content');
+      if (topicCard.classList.contains('violet')) {
+        modalContent.classList.add('violet');
+      } else {
+        modalContent.classList.remove('violet');
+      }
       
       // Показываем модалку
       modalOverlay.classList.add('active');
