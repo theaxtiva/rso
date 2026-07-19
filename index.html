@@ -691,6 +691,17 @@
     transform: rotate(90deg);
   }
 
+  .modal-content.violet .modal-close {
+    background: rgba(192, 132, 252, 0.1);
+    border-color: rgba(192, 132, 252, 0.3);
+    color: var(--violet);
+  }
+
+  .modal-content.violet .modal-close:hover {
+    background: var(--violet);
+    color: var(--bg);
+  }
+ 
   .modal-header {
     margin-bottom: 30px;
     padding-bottom: 20px;
@@ -781,6 +792,14 @@
     background: var(--teal-2);
   }
 
+  .modal-content.violet::-webkit-scrollbar-thumb {
+    background: var(--violet-3);
+  }
+
+  .modal-content.violet::-webkit-scrollbar-thumb:hover {
+    background: var(--violet-2);
+  }
+ 
   /* ===== DICTIONARY ===== */
   .dictionary-section {
     background: linear-gradient(180deg, transparent 0%, rgba(0, 229, 208, 0.03) 50%, transparent 100%);
@@ -2018,7 +2037,7 @@
       
       const isActive = this.classList.contains('active');
       
-      // Закрываем все карточки
+      // Закрываем ВСЕ карточки
       document.querySelectorAll('.topic-card').forEach(c => {
         c.classList.remove('active');
       });
