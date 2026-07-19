@@ -2027,28 +2027,31 @@
     }
   });
 
-  // Переключатель для карточек тем (аккордеон - только одна открыта)
+  // Аккордеон для карточек тем - ТОЛЬКО ОДНА ОТКРЫТА
   document.querySelectorAll('.topic-card').forEach(card => {
     card.addEventListener('click', function(e) {
-      // Если кликнули на вопрос — не разворачиваем/сворачиваем карточку
+      // Останавливаем всплытие события
+      e.stopPropagation();
+      
+      // Если кликнули на вопрос - не трогаем карточку
       if (e.target.classList.contains('clickable-question')) {
         return;
       }
       
-      const isActive = this.classList.contains('active');
+      const isCurrentlyActive = this.classList.contains('active');
       
       // Закрываем ВСЕ карточки
       document.querySelectorAll('.topic-card').forEach(c => {
         c.classList.remove('active');
       });
       
-      // Если текущая не была активна — открываем её
-      if (!isActive) {
+      // Если текущая была закрыта - открываем её
+      if (!isCurrentlyActive) {
         this.classList.add('active');
       }
     });
   });
-
+ 
   // Модальное окно для ответов
   const modalOverlay = document.getElementById('modalOverlay');
   const modalClose = document.getElementById('modalClose');
