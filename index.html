@@ -387,11 +387,11 @@
   }
 
   /* ===== TOPIC CARDS ===== */
-  .topics-grid {
+    .topics-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 24px;
-    align-items: start;
+    align-items: stretch;
   }
 
   .topic-card {
@@ -403,7 +403,9 @@
     overflow: hidden;
     transition: all 0.4s ease;
     cursor: pointer;
-    min-height: 200px;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
   }
 
   .topic-card::before {
