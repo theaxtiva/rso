@@ -437,6 +437,16 @@
     transform: translateX(100%);
   }
 
+  /* У активных карточек убираем ховер-эффекты */
+  .topic-card.active:hover {
+    transform: none;
+    box-shadow: 0 0 30px rgba(0, 229, 208, 0.15);
+  }
+
+  .topic-card.violet.active:hover {
+    box-shadow: 0 0 30px rgba(192, 132, 252, 0.15);
+  }
+
   .topic-card.active {
     border-color: rgba(0, 229, 208, 0.4);
     box-shadow: 0 0 30px rgba(0, 229, 208, 0.15);
